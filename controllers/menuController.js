@@ -1,7 +1,7 @@
 const inquirer = require('inquirer');
 
 module.exports = class MenuController {
-  constructor(){
+  constructor() {
     this.mainMenuQuestions = [
         {
          type: "list",
@@ -9,6 +9,7 @@ module.exports = class MenuController {
           message: "Please choose from an option below: ",
           choices: [
             "Add new contact",
+            "Date",
             "Exit"
           ]
         }
@@ -16,7 +17,7 @@ module.exports = class MenuController {
       this.contacts = [];
   }
 
-  main(){
+  main() {
     console.log(`Welcome to AddressBloc!`);
     inquirer.prompt(this.mainMenuQuestions).then((response) => {
       switch(response.mainMenuChoice){
@@ -25,6 +26,10 @@ module.exports = class MenuController {
           break;
         case "Exit":
           this.exit();
+          break;
+        case 'Date':
+            this.getDate();
+            break;
         default:
           console.log("Invalid input");
           this.main();
@@ -35,17 +40,24 @@ module.exports = class MenuController {
     });
   }
 
-  clear(){
+  clear() {
     console.log("\x1Bc");
   }
 
-  addContact(){
+  addContact() {
     this.clear();
     console.log('addContact called');
     this.main();
   }
 
-  exit(){
+  getDate() {
+    this.clear();
+    const date = new Date();
+    console.log(date);
+    this.main();
+  }
+
+  exit() {
     console.log("Thanks for using AddressBloc!");
     process.exit();
   }
